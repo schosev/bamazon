@@ -1,7 +1,7 @@
 CREATE DATABASE bamazon;
 USE bamazon;
 
-DROP TABLE products;
+-- DROP TABLE products;
 CREATE TABLE products (
 	`item_id` INT(11) NOT NULL AUTO_INCREMENT,
     `product_name` VARCHAR(255) NOT NULL,
@@ -32,4 +32,4 @@ VALUES ("game_system", "electronics", 399.99, 6);
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("tires", "automotive", 125.00, 4);
 
-SELECT * FROM products;
+-- SELECT * FROM products;

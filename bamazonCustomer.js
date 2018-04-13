@@ -1,5 +1,6 @@
 var inquirer = require("inquirer");
 var mysql = require("mysql");
+var cTable = require("console.table");
 
 // create the connection information for the sql database
 var connection = mysql.createConnection({
@@ -24,11 +25,12 @@ var connection = mysql.createConnection({
   function displayProducts() {
   connection.query("SELECT * FROM products", function(err, res) {
     if (err) throw err;
-    console.log("Item ID | Product Name  | Department Name  | Price  | In Stock");
-    for (var i = 0; i < res.length; i++) {
-        console.log(res[i].item_id + " | " + res[i].product_name + " | " + res[i].department_name + " | " + res[i].price + " | " + res[i].stock_quantity);
-    }
-        console.log("-----------------------------------");
+    console.table(res);
+    // console.log("Item ID | Product Name  | Department Name  | Price  | In Stock");
+    // for (var i = 0; i < res.length; i++) {
+    //     console.log(res[i].item_id + " | " + res[i].product_name + " | " + res[i].department_name + " | " + res[i].price + " | " + res[i].stock_quantity);
+    // }
+    //     console.log("-----------------------------------");
         buyProduct();
   });
 }
@@ -51,7 +53,7 @@ function buyProduct() {
 
             var inStock = res[0].stock_quantity;
             var price = res[0].price;
-            if (selectedAmt < inStock) {
+            if (selectedAmt <= inStock) {
                 var newQuantity = inStock - selectedAmt;
                 var total = price * selectedAmt;
                 updateTable(selectedId, newQuantity, total);
