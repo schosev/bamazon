@@ -51,4 +51,3 @@ This is an Amazon-like storefront using MySQL and Node. The app will take in ord
 
     * Exit
       * Will exit the app.
-      
