@@ -26,12 +26,7 @@ var connection = mysql.createConnection({
   connection.query("SELECT * FROM products", function(err, res) {
     if (err) throw err;
     console.table(res);
-    // console.log("Item ID | Product Name  | Department Name  | Price  | In Stock");
-    // for (var i = 0; i < res.length; i++) {
-    //     console.log(res[i].item_id + " | " + res[i].product_name + " | " + res[i].department_name + " | " + res[i].price + " | " + res[i].stock_quantity);
-    // }
-    //     console.log("-----------------------------------");
-        buyProduct();
+    buyProduct();
   });
 }
 
@@ -60,9 +55,28 @@ function buyProduct() {
             } else {
                 console.log("You tried to purchase more than is in stock.");
                 console.log("-----------------------------------");
-                displayProducts();
+                errorBuy();
             }
           });
+    });
+}
+
+function errorBuy() {
+    inquirer.prompt ([
+        {
+            type: "confirm",
+            name: "buyAgain",
+            message: "Would you like to try again?",
+            default: true
+        }
+    ]).then(function(response) {
+        if (response.buyAgain) {
+            displayProducts();
+          }
+          else {
+            console.log("\nPlease come again soon.\n");
+            connection.end();
+          }
     });
 }
 
